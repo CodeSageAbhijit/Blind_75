@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int combinationSum4(vector<int>& nums, int target) {
+        unordered_map<int,int> dp;
+        dp[0] = 1;
+        for(int i=1 ; i<=target;i++){
+            dp[i] = 0;
+            for(int j=0;j<nums.size();j++){
+                if (dp.find(i-nums[j]) != dp.end()){
+                    dp[i] = dp[i] + dp[i-nums[j]];
+                }
+                
+            }
+        }
+        return dp[target];
+    }
+};
