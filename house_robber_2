@@ -1,0 +1,24 @@
+class Solution {
+public:
+int house_rob(vector<int> &nums, int start, int end){
+    int rob_n_1 = 0;
+    int rob_n_2 = 0;
+    int newrob;
+    for(int i=start;i<=end;i++){
+        newrob = max((rob_n_2 + nums[i]),rob_n_1);
+        rob_n_2 = rob_n_1;
+        rob_n_1 = newrob;
+    }
+    return rob_n_1;
+}
+    int rob(vector<int>& nums) {
+        if(nums.size() == 1) return nums[0];
+        int n = nums.size();
+        
+
+        int skip_first_val = house_rob(nums,1,n-1);
+        int skip_last_val = house_rob(nums,0,n-2);
+
+    return max(skip_first_val, skip_last_val);
+    }
+};
