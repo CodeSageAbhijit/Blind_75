@@ -1,18 +1,27 @@
-if (s.empty() || s[0] == '0') return 0;
+class Solution {
+public:
+    int numDecodings(string s) {
+        if (s.empty() || s[0] == '0') return 0;
+        int i_1 = 1;
+        int i_2 = s[0] == '0' ? 0 : 1;
+        int one_digit,two_digit,temp;
 
-    int n = s.size();
-    vector<int> dp(n + 1, 0);
-    dp[0] = 1; // Base case for an empty substring
-    dp[1] = 1; // Base case for a non-'0' first character
+        for( int i=2; i<=s.size() ; i++){
+            one_digit = stoi(s.substr(i-1,1));
+            two_digit = stoi(s.substr(i-2,2));
+            temp = i_2;
 
-    for (int i = 2; i <= n; ++i) {
-        if (s[i - 1] != '0') {
-            dp[i] += dp[i - 1];
+            if (one_digit >= 1) {
+                i_2 = i_2;
+            }
+            else{
+                i_2 = 0;
+            }
+            if (two_digit >= 10 and two_digit <= 26){
+               i_2 = i_2 + i_1; 
+            }
+            i_1 = temp;
         }
-        int twoDigit = stoi(s.substr(i - 2, 2));
-        if (twoDigit >= 10 && twoDigit <= 26) {
-            dp[i] += dp[i - 2];
-        }
+        return i_2;
     }
-
-    return dp[n];
+};
