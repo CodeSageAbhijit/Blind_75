@@ -1,0 +1,18 @@
+if (s.empty() || s[0] == '0') return 0;
+
+    int n = s.size();
+    vector<int> dp(n + 1, 0);
+    dp[0] = 1; // Base case for an empty substring
+    dp[1] = 1; // Base case for a non-'0' first character
+
+    for (int i = 2; i <= n; ++i) {
+        if (s[i - 1] != '0') {
+            dp[i] += dp[i - 1];
+        }
+        int twoDigit = stoi(s.substr(i - 2, 2));
+        if (twoDigit >= 10 && twoDigit <= 26) {
+            dp[i] += dp[i - 2];
+        }
+    }
+
+    return dp[n];
