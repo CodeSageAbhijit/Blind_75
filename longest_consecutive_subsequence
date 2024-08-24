@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> num_set(nums.begin(), nums.end());
+        int longest_sequence = 0;
+
+        for(int i=0;i<nums.size();i++){
+            if (num_set.find(nums[i] - 1) == num_set.end()){
+                int length = 0;
+                while (num_set.find(nums[i] + length) != num_set.end()){
+                    length++;
+                }
+                longest_sequence = max(length,longest_sequence);
+            }
+        }
+        return longest_sequence;
+    }
+};
+// std::unordered_set achieves O(1) average-case time complexity for operations like search, insert, and delete due to its hash table implementation. 
