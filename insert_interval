@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        vector<vector<int>> result;
+        bool inserted = false;
+        
+        for (int i = 0; i < intervals.size(); i++) {
+            if (newInterval[1] < intervals[i][0]) {
+                // If the new interval ends before the current interval starts, insert the new interval here
+                result.push_back(newInterval);
+                result.insert(result.end(), intervals.begin() + i, intervals.end());
+                return result;
+            } else if (newInterval[0] > intervals[i][1]) {
+                // If the new interval starts after the current interval ends, just add the current interval
+                result.push_back(intervals[i]);
+            } else {
+                // Overlapping intervals; merge them
+                newInterval[0] = min(newInterval[0], intervals[i][0]);
+                newInterval[1] = max(newInterval[1], intervals[i][1]);
+            }
+        }
+        
+        // If the new interval hasn't been added yet, add it at the end
+        if (!inserted) {
+            result.push_back(newInterval);
+        }
+        
+        return result;
+    }
+};
