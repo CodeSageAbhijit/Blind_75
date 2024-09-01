@@ -1,0 +1,66 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    // Function to reverse a singly linked list
+    ListNode* reverseList(ListNode* head) {
+        ListNode *prev = nullptr;  // Previous pointer initialized to nullptr
+        ListNode *curr = head;     // Current pointer initialized to head
+        ListNode *next = nullptr;  // Next pointer to store the next node temporarily
+
+        // Iteratively reverse the linked list
+        while (curr != nullptr) {
+            next = curr->next;     // Store next node
+            curr->next = prev;     // Reverse the current node's next pointer
+            prev = curr;           // Move the previous pointer to current
+            curr = next;           // Move to the next node
+        }
+
+        return prev;  // Return new head after reversing
+    }
+
+    // Function to reorder the linked list
+    void reorderList(ListNode* head) {
+        // Base cases: If list is empty or has less than 3 nodes, no reordering needed
+        if (head == nullptr || head->next == nullptr || head->next->next == nullptr) return;
+
+        // Find the middle of the linked list using slow and fast pointers
+        ListNode *slow = head;   // Slow pointer moves one step at a time
+        ListNode *fast = head;   // Fast pointer moves two steps at a time
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        // Split the list into two halves
+        ListNode *firstHalf = head;     // First half starts from the head
+        ListNode *secondHalf = slow->next;  // Second half starts after the middle
+        slow->next = nullptr;           // Terminate the first half
+
+        // Reverse the second half
+        ListNode *secondHead = reverseList(secondHalf);
+
+        // Merge the two halves
+        ListNode *firstCurr = firstHalf;
+        ListNode *secondCurr = secondHead;
+        while (secondCurr != nullptr) {
+            ListNode *temp1 = firstCurr->next; // Store next node of the first half
+            ListNode *temp2 = secondCurr->next; // Store next node of the second half
+
+            firstCurr->next = secondCurr;      // Link current node of the first half to current node of the second half
+            secondCurr->next = temp1;          // Link current node of the second half to next node of the first half
+
+            // Move the pointers ahead
+            firstCurr = temp1;
+            secondCurr = temp2;
+        }
+    }
+};
