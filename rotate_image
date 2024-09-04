@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) {
+     int n = matrix.size();
+     int temp;
+
+     for(int i=0; i<(n+1)/2;i++){
+        for(int j=0; j<n/2 ; j++){
+            // store bottom left value
+            temp = matrix[n-1-j][i];
+
+            // Bottom left = Bottom right
+            matrix[n-1-j][i] = matrix[n-1-i][n-1-j];
+
+            // store Bottom right = Top right
+            matrix[n-1-i][n-1-j] = matrix[j][n-1-i];
+
+            // store Top right = Top Left
+            matrix[j][n-1-i] = matrix[i][j];
+            
+            // store top Left = temp
+            matrix[i][j] = temp;
+        }
+     } 
+     
+    }
+};
