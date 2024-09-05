@@ -1,0 +1,49 @@
+class Solution {
+public:
+    // Main function to check if the word exists in the board
+    bool exist(vector<vector<char>>& board, string word) {
+        int rows = board.size();  // Get the number of rows in the board
+        int cols = board[0].size();  // Get the number of columns in the board
+        // Create a 2D vector to keep track of visited cells
+        vector<vector<bool>> visited(rows, vector<bool>(cols, false));
+
+        // Define a lambda function for Depth-First Search (DFS) to explore the board
+        function<bool(int, int, int)> DFS = [&](int row, int col, int idx) {
+            // If we have matched all characters in the word, return true
+            if (idx == word.size()) {
+                return true;
+            }
+            // Check if the current cell is out of bounds, already visited,
+            // or does not match the character at the current index of the word
+            if (row < 0 || row >= rows || col < 0 || col >= cols || 
+                word[idx] != board[row][col] || visited[row][col]) {
+                return false;  // If any condition fails, return false
+            }
+
+            // Mark the current cell as visited
+            visited[row][col] = true;
+
+            // Explore all four possible directions (down, up, right, left)
+            bool result = DFS(row + 1, col, idx + 1) || // Down
+                          DFS(row - 1, col, idx + 1) || // Up
+                          DFS(row, col + 1, idx + 1) || // Right
+                          DFS(row, col - 1, idx + 1);   // Left
+
+            // Backtrack: unmark the current cell as visited
+            visited[row][col] = false;
+            return result;  // Return the result of the DFS
+        };
+
+        // Loop through each cell in the board to find the starting point of the word
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                // Start DFS from cell (i, j) and check if it can lead to finding the word
+                if (DFS(i, j, 0)) {  // 0 is the starting index of the word
+                    return true;  // If the word is found, return true
+                }
+            }
+        }
+
+        return false;  // If no path is found that matches the word, return false
+    }
+};
