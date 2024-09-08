@@ -1,0 +1,70 @@
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        if (t.empty()) return "";
+        int l  = 0;
+        int resLen = INT_MAX;
+        vector<int> result(2,0);
+        unordered_map<char,int> countT;
+        unordered_map<char,int> window;
+        int have =0;
+        
+
+        
+
+        // prepare hash_map for t string
+        for(int i=0;i<t.size();i++){
+            if((countT.find(t[i])) == countT.end()){
+                countT[t[i]] = 1;
+            }
+            else{
+                countT[t[i]]++;
+            }
+        }
+        int need = countT.size();
+
+        for(int r=0;r<s.size();r++){
+            char c = s[r];
+            // if char is from counT hash_map increament its value pair
+            if((window.find(c)) == window.end()){
+                window[c] = 1;
+            }
+            else{
+                window[c]++;
+            }
+            // if both hashmaps count matches we have "1"
+            if ((window[c] == countT[c]) and countT.find(c) != countT.end()){
+                have++;
+            }
+
+            while(have == need){
+                // update the result
+                if((r-l+1)<resLen){
+                    result = {l,r+1};
+                    resLen = r-l+1;
+                }
+
+                // now pop from left and check if window is shrinkable
+                window[s[l]]--;
+                if((countT.find(s[l])!=countT.end()) and (window[s[l]] < countT[s[l]])){
+                    have--;
+                }
+                l++;
+            }
+
+        }
+
+        int left = result[0];
+        int right = result[1];
+        
+        if (resLen != INT_MAX){
+            return s.substr(left,resLen);
+        }
+        else{
+            return "";
+        }
+
+
+
+    }
+};
