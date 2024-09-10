@@ -1,0 +1,50 @@
+class Solution {
+public:
+std::string getFrequencyString(const std::string &str) {
+    // Frequency buckets
+    std::vector<int> freq(26, 0);
+
+    // Iterate over each character
+    for (char c : str) {
+        freq[c - 'a']++;
+    }
+
+    // Start creating the frequency string
+    std::string frequencyString;
+    char c = 'a';
+    for (int count : freq) {
+        frequencyString += c;
+        frequencyString += std::to_string(count);
+        c++;
+    }
+
+    return frequencyString;
+}
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        if (strs.empty()) return {};
+
+        unordered_map<string,vector<string>> freq_string_map;
+
+        // Create a map to store frequency strings
+    std::unordered_map<std::string, std::vector<std::string>> frequencyStringsMap;
+
+    // Iterate over each string
+    for (const std::string &str : strs) {
+        std::string frequencyString = getFrequencyString(str);
+
+        // Add the string to the map
+        frequencyStringsMap[frequencyString].push_back(str);
+    }
+
+    // Prepare the result from the map values
+    std::vector<std::vector<std::string>> result;
+    for (const auto &pair : frequencyStringsMap) {
+        result.push_back(pair.second);
+    }
+
+    return result;
+
+
+    }
+};
