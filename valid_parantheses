@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool isValid(std::string s) {
+        std::unordered_map<char, char> openclose {
+            {')', '('},
+            {']', '['},
+            {'}', '{'}
+        };
+
+        stack<char> Stack;
+
+        for(const auto& c : s){
+            if(openclose.find(c) != openclose.end()){  // if char is a closing bracket
+                if(!Stack.empty() && Stack.top() == openclose[c]){
+                    Stack.pop();  // Remove the matching opening bracket
+                }
+                else{
+                    return false;  // Mismatch or Stack is empty
+                }
+            }
+            else{
+                Stack.push(c);  // Push opening brackets
+            }
+        }
+
+        return Stack.empty();  // If the stack is empty, it's valid; otherwise, invalid
+    }
+};
