@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void countEachPalindrome(int &l,int &r,int &count,string &s){
+        while ((l >=0) and (r < s.size()) and (s[l] == s[r])){
+                count++;
+                l--;
+                r++;
+            }
+    }
+public:
+    int countSubstrings(string s) {
+        string result;
+        int count = 0;
+        if(s.empty()) return 0;
+
+        for(int i=0;i<s.size();i++){
+            // for odd length
+            int l = i;
+            int r = i;
+            countEachPalindrome(l,r,count,s);
+            // for even length
+            l = i ;
+            r = i+1;
+            countEachPalindrome(l,r,count,s);
+        }
+        return count;
+    }
+};
