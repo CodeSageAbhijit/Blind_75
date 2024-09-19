@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int maxSum = INT_MIN; // To store the maximum path sum
+
+    int dfs(TreeNode* root) {
+        if (!root) {
+            return 0;
+        }
+
+        // Recurse on the left and right subtrees
+        int leftMax = dfs(root->left);
+        int rightMax = dfs(root->right);
+
+        // Ignore paths with negative sums, considering only positive contributions
+        leftMax = max(leftMax, 0);
+        rightMax = max(rightMax, 0);
+
+        // Calculate the max path sum with a split (current node as root of path)
+        int splitMax = root->val + leftMax + rightMax;
+
+        // Update the global max sum
+        maxSum = max(maxSum, splitMax);
+
+        // Return the maximum path sum without splitting
+        return root->val + max(leftMax, rightMax);
+    }
+
+    int maxPathSum(TreeNode* root) {
+        dfs(root);
+        return maxSum;
+    }
+};
