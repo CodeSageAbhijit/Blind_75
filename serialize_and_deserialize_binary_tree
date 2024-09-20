@@ -1,0 +1,64 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Codec {
+public:
+    void dfs(TreeNode* node,string &serial){
+                if (!node){
+                    serial += "N,";
+                    return;
+                }
+                serial += to_string(node->val) + ",";
+                dfs(node->left, serial);
+                dfs(node->right,serial);
+            }
+
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string serial;
+        dfs(root, serial);
+        // Remove the trailing comma
+        if (!serial.empty()) {
+            serial.pop_back();
+        }
+        return serial;
+    }
+
+    TreeNode* dfs(string &data,int &i){
+        
+        if(data[i] == 'N'){
+            i +=2;
+            return nullptr;
+        }
+        // Find the next comma to extract the number
+        int start = i;
+        while (data[i] != ',') {
+            i++;
+        }
+        
+        // Convert the extracted substring to an integer
+        int val = stoi(data.substr(start, i - start));
+        i++;  // Move past the comma
+        TreeNode* node = new TreeNode(val);
+        node->left = dfs(data, i);
+        node->right = dfs(data, i);
+        return node;
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        int i  = 0;
+        return dfs(data,i);
+
+    }
+};
+
+// Your Codec object will be instantiated and called as such:
+// Codec ser, deser;
+// TreeNode* ans = deser.deserialize(ser.serialize(root));
