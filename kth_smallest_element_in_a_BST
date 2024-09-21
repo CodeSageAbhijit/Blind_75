@@ -1,0 +1,36 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
+ * };
+ */
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        int n = 0;
+        stack<TreeNode*> Stack;
+        TreeNode* current = root;
+
+        while (current or !Stack.empty()) {
+            while (current) {
+                Stack.push(current);
+                current = current->left;
+            }
+            current = Stack.top();  // found the smallest element then pop it
+            Stack.pop(); 
+            n++;
+            if (n == k) {
+                return current->val;
+            }
+            current = current->right; // when reached the leftmost end of the tree found null then moves one node back and move to its right
+        }
+
+        return -1;
+    }
+};
