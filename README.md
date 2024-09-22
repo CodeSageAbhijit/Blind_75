@@ -48,28 +48,37 @@ Feel free to go through the code, analyze the approach, and suggest any improvem
 Here’s the full list of the Blind 75 problems that I solved. Each file in the repository corresponds to one of the problems below:
 
 Array  
+
 Two Sum  
 Best Time to Buy and Sell Stock  
 ...  
+
 Dynamic Programming   
+
 Climbing Stairs  
 House Robber  
 ...  
+
 Linked List  
+
 Reverse a Linked List  
 Detect Cycle in a Linked List  
 ...  
+
 Tree/Graph  
+
 Maximum Depth of Binary Tree  
 Same Tree  
 ...  
 
 🔥 Key Takeaways  
+
 Language: Solutions are written in C++ for optimal performance.  
 Efficiency: The solutions focus on time and space complexity optimization.  
 Documentation: Each solution includes comments explaining the approach and logic.  
 
 🚩 Next Steps  
+
 Now that the Blind 75 challenge is complete, I plan to:  
 
 Tackle more LeetCode challenges.  
@@ -77,6 +86,7 @@ Explore advanced topics in algorithms and data structures.
 Contribute to open-source projects with these skills.  
 
 🤝 Connect with Me  
+
 If you have any feedback, suggestions, or want to collaborate, feel free to connect:  
 
 https://www.linkedin.com/in/abhijit-kad/  
