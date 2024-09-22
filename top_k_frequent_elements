@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> count;
+        int maxFreq = 0;
+
+        // Count the frequency of each number
+        for (int num : nums) {
+            count[num]++;
+            maxFreq = max(maxFreq, count[num]);
+        }
+
+        // Create a frequency array where index is the frequency and value is a list of numbers
+        vector<vector<int>> frequency(maxFreq + 1);  // Create an array with size maxFreq+1
+
+        // Populate the frequency vector
+        for (const auto& [num, freq] : count) {
+            frequency[freq].push_back(num);
+        }
+
+        // Collect the top k frequent numbers
+        vector<int> result;
+        for (int i = maxFreq; i > 0; --i) {  // Start from the highest frequency
+            for (int num : frequency[i]) {
+                result.push_back(num);
+                if (result.size() == k) {
+                    return result;
+                }
+            }
+        }
+        
+        return result;
+    }
+};
