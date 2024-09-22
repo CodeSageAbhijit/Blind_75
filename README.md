@@ -41,7 +41,7 @@ Clone the repository to explore my solutions:
 ```bash
 git clone https://github.com/CodeSageAbhijit/Blind_75
 Feel free to go through the code, analyze the approach, and suggest any improvements!
-```bash
+```
 
 🔗 Problem List
 Here’s the full list of the Blind 75 problems that I solved. Each file in the repository corresponds to one of the problems below:
